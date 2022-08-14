@@ -1,4 +1,7 @@
 "parcer top 50 actors"
+import requests
+from bs4 import BeautifulSoup as bs
+import json
 
 URL_TEMPLATE = "https://www.imdb.com/search/name/?gender=male%2Cfemale&ref_=nv_cel_m"
 URL_start = 'https://www.imdb.com'
@@ -24,3 +27,11 @@ for name, bio in zip(actors_names, bio_actors):
                         'url':  (URL_start + name.find('a').get('href')+'/').strip(), \
                         'movies': [res_film[i].get_text() for i in range(len(res_film))], \
                         'movie_links': [(URL_start + res_film[i].get('href') + '/') for i in range(len(res_film))]})
+    
+json_string = json.dumps(result_list)
+print(json_string)
+
+jsonString = json.dumps(result_list)
+jsonFile = open("data.json", "w")
+jsonFile.write(jsonString)
+jsonFile.close()
