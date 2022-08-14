@@ -23,3 +23,11 @@ for name in actors_names:
         result_list.append({'movie_links': (URL_start + res_film[i].get('href')),
                             'title': res_film[i].get_text().strip(),  
                             'cast': [i.find('a').get('aria-label').strip() for i in res]})
+
+json_string = json.dumps(result_list)
+print(json_string)
+
+jsonString = json.dumps(result_list)
+jsonFile = open("data_films.json", "w")
+jsonFile.write(jsonString)
+jsonFile.close()
