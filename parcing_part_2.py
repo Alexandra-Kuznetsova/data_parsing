@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs
 import json
+import jsonlines
 
 %%time
 URL_TEMPLATE = "https://www.imdb.com/search/name/?gender=male%2Cfemale&ref_=nv_cel_m"
@@ -24,10 +25,5 @@ for name in actors_names:
                             'title': res_film[i].get_text().strip(),  
                             'cast': [i.find('a').get('aria-label').strip() for i in res]})
 
-json_string = json.dumps(result_list)
-print(json_string)
-
-jsonString = json.dumps(result_list)
-jsonFile = open("data_films.json", "w")
-jsonFile.write(jsonString)
-jsonFile.close()
+with jsonlines.open('output.jsonl', 'w') as writer:
+    writer.write_all(result_list)
