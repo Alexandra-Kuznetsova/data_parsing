@@ -23,7 +23,8 @@ for name in actors_names:
         res = soup.find_all('div',attrs={"data-testid":"title-cast-item"})
         result_list.append({'movie_links': (URL_start + res_film[i].get('href')),
                             'title': res_film[i].get_text().strip(),  
-                            'cast': [i.find('a').get('aria-label').strip() for i in res]})
+                            'cast': [i.find('a').get('aria-label').strip() for i in res], 
+                            'url': [URL_start + i.find('a').get('href') for i in res]})
 
 with jsonlines.open('output.jsonl', 'w') as writer:
     writer.write_all(result_list)
